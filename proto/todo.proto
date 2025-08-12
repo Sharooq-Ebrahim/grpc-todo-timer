@@ -1,0 +1,46 @@
+syntax = "proto3"
+
+package todo;
+
+service TodoService {
+  rpc AddTask(AddTaskRequest) returns (AddTaskResponse);
+  rpc CompleteTask(CompleteTaskRequest) returns (CompleteTaskResponse);
+  rpc StreamCountdown(CountdownRequest) returns (stream CountdownUpdate);
+  rpc AddMultipleTasks(stream AddTaskRequest) returns (MultiAddSummary);
+}
+
+message Task {
+  string id = 1;
+  string title = 2;
+  int32 seconds = 3;
+  bool completed = 4;
+}
+
+message AddTaskRequest {
+  string title = 1;
+  int32 seconds = 2; 
+}
+
+message AddTaskResponse {
+  string id = 1;
+}
+
+message CompleteTaskRequest {
+  string id = 1;
+}
+
+message CompleteTaskResponse {
+  bool success = 1;
+}
+
+message CountdownRequest {
+  string id = 1;
+}
+
+message CountdownUpdate {
+  int32 seconds_left = 1;
+}
+
+message MultiAddSummary {
+  int32 total_added = 1;
+}
